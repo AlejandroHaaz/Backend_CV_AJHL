@@ -30,4 +30,4 @@ const tareaSchema = mongoose.Schema({
     timestamps: true //cada que haga un documento (registro) mongoose podrá poner la fecha de creación y modificación
 })
 
-module.exports = mongoose.model('Tarea', tareaSchema) //cuando creamos un modelo tenemos que nombrarlo en singular y con letra capital (esta es la conveción debido a mongoose)
+module.exports = mongoose.model('Publicacion', tareaSchema) //cuando creamos un modelo tenemos que nombrarlo en singular y con letra capital (esta es la conveción debido a mongoose)

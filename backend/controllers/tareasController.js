@@ -1,15 +1,15 @@
 const asyncHandler = require('express-async-handler')
-const Tarea = require ('../models/tareasModel')
+const Publicacion = require ('../models/tareasModel')
 const User = require ('../models/userModel')
 
 // Esta función se creó para que los usuarios también puedan ver las publicaciones de otros
 const getTareasPublicas = asyncHandler(async (req, res) => {
-    const tareas = await Tarea.find(); // Asumiendo que hay un campo que marca las tareas como públicas
+    const tareas = await Publicacion.find(); // Asumiendo que hay un campo que marca las tareas como públicas
     res.status(200).json(tareas);
 });
 
 const getTareas = asyncHandler(async (req, res) => {
-    const tareas = await Tarea.find({user: req.user.id})
+    const tareas = await Publicacion.find({user: req.user.id})
     res.status(200).json(tareas)
 })
 
@@ -28,7 +28,7 @@ const crearTareas = asyncHandler (async (req, res) => {
         throw new Error('Usuario no encontrado')
     }
 
-    const tarea = await Tarea.create ({
+    const tarea = await Publicacion.create ({
         user: req.user.id,
         nombreUsuario: usuario.name,
         titulo,
@@ -44,7 +44,7 @@ const crearTareas = asyncHandler (async (req, res) => {
 const updateTareas = asyncHandler (async (req, res) => {
     
    //buscamos la tarea que deseamos modificar
-    const tarea = await Tarea.findById(req.params.id)
+    const tarea = await Publicacion.findById(req.params.id)
 
     if(!tarea){
         res.status(404)
@@ -56,7 +56,7 @@ const updateTareas = asyncHandler (async (req, res) => {
         throw new Error('Usuario no autorizado');
     }
 
-    const tareaUpdated = await Tarea.findByIdAndUpdate(req.params.id, req.body, {new: true}) //true porque queremos que nos devuelva el documento nuevo si fuera false nos devolvería el antiguo, esto se ve en la documentación)
+    const tareaUpdated = await Publicacion.findByIdAndUpdate(req.params.id, req.body, {new: true}) //true porque queremos que nos devuelva el documento nuevo si fuera false nos devolvería el antiguo, esto se ve en la documentación)
 
     res.status(200).json(tareaUpdated)
 })
@@ -64,7 +64,7 @@ const updateTareas = asyncHandler (async (req, res) => {
 const deleteTareas = asyncHandler (async (req, res) => {
         
    //buscamos la tarea que deseamos eliminar
-   const tarea = await Tarea.findById(req.params.id)
+   const tarea = await Publicacion.findById(req.params.id)
 
    if(!tarea){
        res.status(404)
@@ -77,7 +77,7 @@ const deleteTareas = asyncHandler (async (req, res) => {
     }
    //const tareaDeleted = await Tarea.findByIdAndDelete(req.params.id, req.body, {new: true}) //true porque queremos que nos devuelva el documento nuevo si fuera false nos devolvería el antiguo, esto se ve en la documentación)
 
-   await Tarea.deleteOne(tarea)
+   await Publicacion.deleteOne(tarea)
 
    //res.status(200).json(tareaDeleted)
    res.status(200).json({message: 'La tarea ha sido eliminada'})
